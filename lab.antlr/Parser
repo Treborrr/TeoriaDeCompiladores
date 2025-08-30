@@ -1,0 +1,33 @@
+parser grammar ExprParser;
+options { tokenVocab=ExprLexer; }
+
+// Permitir multiples instrucciones
+program: (stat | def)* EOF ;
+
+
+stat: ID '=' expr ';'
+    | expr ';'
+    ;
+
+def : ID '(' ID (',' ID)* ')' '{' stat* '}' ;
+
+expr: ID
+    | INT
+    | func
+    | 'not' expr
+    | expr 'and' expr
+    | expr 'or' expr
+    | expr PLUS expr
+    | expr MINUS expr
+    | expr DIV expr
+    | expr MULT expr
+    | UPCUPCUPC
+    | HEX
+    | STRING
+    | FLOAT
+    | array
+    ;
+    
+array: LBRACK (expr (COMMA expr)*)? RBRACK ;
+
+func : ID '(' expr (',' expr)* ')' ;
